@@ -104,7 +104,7 @@ class DumbKeyboard:
 
 class DumbPrefs:
 
-        clients = ['Plex for iOS', 'Plex Media Player', 'Plex Home Theater', 'Plex for Roku']
+        clients = ['Plex for iOS', 'Plex Media Player', 'Plex Home Theater', 'OpenPHT', 'Plex for Roku']
 
         def __init__(self, prefix, oc, title=None, thumb=None):
 
@@ -132,7 +132,7 @@ class DumbPrefs:
         def GetPrefs(self):
 
                 try:
-                        prefs = XML.ElementFromString(HTTP.Request("http://%s/:/plugins/%s/prefs" % (self.host, Plugin.Identifier), headers=Request.Headers, immediate=True).content).xpath('/MediaContainer/Setting')
+                        prefs = XML.ElementFromString(HTTP.Request("http://%s/:/plugins/%s/prefs" % (self.host, Plugin.Identifier), headers=Request.Headers, immediate=True, cacheTime=0).content).xpath('/MediaContainer/Setting')
                 except Exception as e:
                         Log(str(e))
                         prefs = []
@@ -154,11 +154,11 @@ class DumbPrefs:
         def Set(self, key, value):
 
                 HTTP.Request("http://%s/:/plugins/%s/prefs/set?%s=%s" % (self.host, Plugin.Identifier, key, value), headers=Request.Headers, immediate=True)
-                return self.ListPrefs()
+                return ObjectContainer()
 
         def ListPrefs(self):
 
-                oc = ObjectContainer()
+                oc = ObjectContainer(no_cache=True)
 
                 for pref in self.prefs:
 
