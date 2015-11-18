@@ -4,6 +4,8 @@ from DumbKeyboard import DumbKeyboard
 
 class DumbPrefs:
 
+        clients = ['Plex for iOS', 'Plex Media Player', 'Plex Home Theater', 'OpenPHT', 'Plex for Roku']
+
         def __init__(self, prefix, oc, title=None, thumb=None):
 
                 Route.Connect(prefix+'/dumbprefs/list',     self.ListPrefs)
