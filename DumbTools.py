@@ -8,7 +8,7 @@ class DumbKeyboard:
 
         def __init__(self, prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs):
 
-                cb_hash = hash(str(callback))
+                cb_hash = hash(str(callback)+str(kwargs))
                 Route.Connect(prefix+'/dumbkeyboard/%s'                     % cb_hash, self.Keyboard)
                 Route.Connect(prefix+'/dumbkeyboard/%s/submit'              % cb_hash, self.Submit)
                 Route.Connect(prefix+'/dumbkeyboard/%s/history'             % cb_hash, self.History)
