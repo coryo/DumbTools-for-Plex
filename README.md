@@ -47,7 +47,7 @@ Appends a DirectoryObject to `oc` which will provide a series of DirectoryObject
   * ***kwargs*: additional arguments to send to the callback function.
     * if you have search function `Search(query, a=None, b=None)` then you can use `DumbKeyboard(prefix, oc, Search, a='something' b=123)`
  
-`DumbKeyboard.clients` - Client.Platform's that don't have InputDirectoryObjects or don't always work correctly.
+`DumbKeyboard.clients` - Client.Product's that don't have InputDirectoryObjects or don't always work correctly.
   * Plex for iOS
   * Plex Media Player
   * Plex Web
@@ -62,7 +62,7 @@ It may require the following addition to `Info.plist`:
     <string>Elevated</string>
 ```
 
-### Usage
+### Usage:
 
 ```
 from DumbPrefs import DumbPrefs
@@ -70,7 +70,23 @@ from DumbPrefs import DumbPrefs
 @handler(PREFIX, NAME)
 def MainMenu():
         oc = ObjectContainer()
-        DumbPrefs(PREFIX, oc,
-                title = L('preferences'),
-                thumb = R(ICONS['preferences']))
+        
+        if Client.Product in DumbPrefs.clients:
+                DumbPrefs(PREFIX, oc,
+                        title = L('preferences'),
+                        thumb = R(ICONS['preferences']))
+        else:
+                oc.add(PrefsObject(
+                        title = L('preferences'),
+                        thumb = R(ICONS['preferences'])
+                ))
 ```
+
+### Definitions: 
+
+`DumbPrefs.clients` - Client.Product's that don't have Prefs or don't always work correctly.
+  * 'Plex for iOS' - doesn't have it
+  * 'Plex Media Player' - doesn't have it
+  * 'Plex Home Theater' - has it, but it never liked saving text prefs
+  * 'OpenPHT'
+  * 'Plex for Roku' - I don't think it has it, I'm not sure if this is the correct product name.
