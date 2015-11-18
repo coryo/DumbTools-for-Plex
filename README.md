@@ -17,7 +17,8 @@ in `__init__.py` where you have an InputDirectoryObject:
 ```
 if Client.Product in DumbKeyboard.clients:
         DumbKeyboard(PREFIX, oc,
-                thumb    = R(ICONS['search']),
+                dktitle  = u'%s' L('search'),
+                dkthumb  = R(ICONS['search']),
                 callback = Search)
 else:
         oc.add(InputDirectoryObject(
@@ -33,14 +34,15 @@ def Search(query):
 ```        
 ## Definitions:
 
-`DumbKeyboard(prefix, oc, callback, thumb=None, **kwargs)`
+`DumbKeyboard(prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs)`
 
 Appends a DirectoryObject to `oc` which will provide a series of DirectoryObjects to build a string. `callback` is called with the arguments `query` and `**kwargs` when the Submit directory is selected.
 
   * *prefix*: whatever is used in the @handler(PREFIX, NAME).
   * *oc*: the object container to add to.
   * *callback*: the Search function. This must have atleast 1 argument 'query'.
-  * *thumb*: (optional) the thumbnail to use for the search directoryObject.
+  * *dktitle*: (optional) the title to use for the search directoryObject.
+  * *dkthumb*: (optional) the thumbnail to use for the search directoryObject.
   * ***kwargs*: additional arguments to send to the callback function.
     * if you have search function `Search(query, a=None, b=None)` then you can use `DumbKeyboard(prefix, oc, Search, a='something' b=123)`
  
