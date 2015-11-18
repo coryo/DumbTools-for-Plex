@@ -17,10 +17,10 @@ from DumbKeyboard import DumbKeyboard
 in `__init__.py` where you have an InputDirectoryObject:
 ```
 if Client.Product in DumbKeyboard.clients:
-        DumbKeyboard(PREFIX, oc,
-                dktitle  = u'%s' L('search'),
-                dkthumb  = R(ICONS['search']),
-                callback = Search)
+        DumbKeyboard(PREFIX, oc, Search,
+                dktitle = u'%s' L('search'),
+                dkthumb = R(ICONS['search'])
+        )
 else:
         oc.add(InputDirectoryObject(
                 key    = Callback(Search),
