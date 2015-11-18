@@ -56,6 +56,8 @@ Appends a DirectoryObject to `oc` which will provide a series of DirectoryObject
 
 a replacement for the PrefsObject. This should allow both displaying and changing channel preferences using only DirectoryObjects.
 
+![http://i.imgur.com/fI65O87.png](http://i.imgur.com/fI65O87.png)
+
 It may require the following addition to `Info.plist`:
 ```
     <key>PlexPluginCodePolicy</key>
