@@ -86,6 +86,15 @@ def MainMenu():
 
 ### Definitions: 
 
+`DumbPrefs(prefix, oc, title=None, thumb=None)`
+
+Appends a DirectoryObject to `oc` which will allow users to change text, bool, and enum channel preferences.
+
+  * *prefix*: whatever is used in the @handler(PREFIX, NAME).
+  * *oc*: the object container to add to.
+  * *title*: (optional) the title to use for the directoryObject.
+  * *thumb*: (optional) the thumbnail to use for the directoryObject.
+
 `DumbPrefs.clients` - Client.Product's that don't have Prefs or don't always work correctly.
   * 'Plex for iOS' - doesn't have it
   * 'Plex Media Player' - doesn't have it
