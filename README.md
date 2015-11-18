@@ -4,7 +4,7 @@ This serves as a replacement for the InputDirectoryObject in the Plex Plug-in fr
 
 ![http://i.imgur.com/Q622vhM.png](http://i.imgur.com/Q622vhM.png)
 
-## Usage
+## Usage:
 
 add `DumbKeyboard.py` to `Channel.bundle/Contents/Code`.
 
@@ -43,3 +43,8 @@ Appends a DirectoryObject to `oc` which will provide a series of DirectoryObject
   * *thumb*: (optional) the thumbnail to use for the search directoryObject.
   * ***kwargs*: additional arguments to send to the callback function.
     * if you have search function `Search(query, a=None, b=None)` then you can use `DumbKeyboard(prefix, oc, Search, a='something' b=123)`
+ 
+`DumbKeyboard.clients` - Client.Platform's that don't have InputDirectoryObjects or don't always work correctly.
+  * Plex for iOS
+  * Plex Media Player
+  * Plex Web
