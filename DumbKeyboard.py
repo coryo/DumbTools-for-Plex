@@ -7,35 +7,32 @@ class DumbKeyboard:
 
         def __init__(self, prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs):
 
-                Route.Connect(prefix+'/dumbkeyboard',               self.Keyboard)
-                Route.Connect(prefix+'/dumbkeyboard/submit',        self.Submit)
-                Route.Connect(prefix+'/dumbkeyboard/history',       self.History)
-                Route.Connect(prefix+'/dumbkeyboard/history/clear', self.ClearHistory)
+                Route.Connect(prefix+'/dumbkeyboard',                     self.Keyboard)
+                Route.Connect(prefix+'/dumbkeyboard/submit',              self.Submit)
+                Route.Connect(prefix+'/dumbkeyboard/history',             self.History)
+                Route.Connect(prefix+'/dumbkeyboard/history/clear',       self.ClearHistory)
+                Route.Connect(prefix+'/dumbkeyboard/history/add/{query}', self.AddHistory)
 
-                do = DirectoryObject()
-
-                do.key   = Callback(self.Keyboard)
-                do.title = str(dktitle) if dktitle else u'%s' % L('DumbKeyboard Search')
-                if dkthumb:
-                        do.thumb = dkthumb
-                oc.add(do)
+                oc.add(DirectoryObject(
+                        key   = Callback(self.Keyboard),
+                        title = str(dktitle) if dktitle else u'%s' % L('DumbKeyboard Search'),
+                        thumb = dkthumb
+                ))
 
                 if not 'DumbKeyboard-History' in Dict:
                         Dict['DumbKeyboard-History'] = []
                         Dict.Save()
 
-                Log(Client.Product)
-
                 self.Callback = callback
                 self.callback_args = kwargs
 
-        def Keyboard(self, q=None):
+        def Keyboard(self, query=None):
 
                 oc = ObjectContainer()
 
                 oc.add(DirectoryObject(
-                        key   = Callback(self.Submit, q=q),
-                        title = u'%s: %s' % (L('Submit'), q.replace(' ', '_') if q else q),
+                        key   = Callback(self.Submit, query=query),
+                        title = u'%s: %s' % (L('Submit'), query.replace(' ', '_') if query else query),
                 ))
 
                 if len(Dict['DumbKeyboard-History']) > 0:
@@ -45,18 +42,19 @@ class DumbKeyboard:
                         ))
 
                 oc.add(DirectoryObject(
-                        key = Callback(self.Keyboard, q=q+" " if q else " "),
+                        key = Callback(self.Keyboard, query=query+" " if query else " "),
                         title = 'Space',
                 ))
-                if q:
+                
+                if query:
                         oc.add(DirectoryObject(
-                                key = Callback(self.Keyboard, q=q[:-1]),
+                                key = Callback(self.Keyboard, query=query[:-1]),
                                 title = 'Backspace',
                         ))
 
                 for key in self.KEYS:
                         oc.add(DirectoryObject(
-                                key   = Callback(self.Keyboard, q=q+key if q else key),
+                                key   = Callback(self.Keyboard, query=query+key if query else key),
                                 title = u'%s' % key,
                         ))
 
@@ -74,7 +72,7 @@ class DumbKeyboard:
 
                 for item in Dict['DumbKeyboard-History']:
                         oc.add(DirectoryObject(
-                                key   = Callback(self.Submit, q=item),
+                                key   = Callback(self.Submit, query=item),
                                 title = u'%s' % item,
                         ))
 
@@ -87,13 +85,17 @@ class DumbKeyboard:
 
                 return self.History()
 
-        def Submit(self, q):
+        def AddHistory(self, query):
 
-                if not q in Dict['DumbKeyboard-History']:
-                        Dict['DumbKeyboard-History'].append(q)
+                if not query in Dict['DumbKeyboard-History']:
+                        Dict['DumbKeyboard-History'].append(query)
                         Dict.Save()
 
-                kwargs = {'query': q}
+        def Submit(self, query):
+
+                self.AddHistory(query)
+
+                kwargs = {'query': query}
                 kwargs.update(self.callback_args)
                 
                 return self.Callback(**kwargs)
