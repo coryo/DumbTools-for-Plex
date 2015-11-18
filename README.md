@@ -7,11 +7,11 @@ This serves as a replacement for the InputDirectoryObject in the Plex Plug-in fr
 
 ### Usage:
 
-add `DumbKeyboard.py` to `Channel.bundle/Contents/Code`.
+add `DumbTools.py` to `Channel.bundle/Contents/Code`.
 
 in `__init__.py` add:
 ```
-from DumbKeyboard import DumbKeyboard
+from DumbTools import DumbKeyboard
 ```
 
 in `__init__.py` where you have an InputDirectoryObject:
@@ -67,7 +67,7 @@ It may require the following addition to `Info.plist`:
 ### Usage:
 
 ```
-from DumbPrefs import DumbPrefs
+from DumbTools import DumbPrefs
 
 @handler(PREFIX, NAME)
 def MainMenu():
