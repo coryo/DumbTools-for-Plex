@@ -11,21 +11,26 @@ class DumbPrefs:
                 Route.Connect(prefix+'/dumbprefs/set',      self.Set)
                 Route.Connect(prefix+'/dumbprefs/settext',  self.SetText)
 
-                self.GetPrefs()
-
                 oc.add(DirectoryObject(
                         key   = Callback(self.ListPrefs),
                         title = title if title else L('Preferences'),
                         thumb = thumb if thumb else None,
                 ))
-                Log(Request.Headers)
 
                 self.prefix = prefix
+                self.host = Request.Headers['Host']
+
+                if 'plex.direct' in self.host:
+                        self.host = "%s:%s" % (self.host.split('.')[0].replace('-','.'), self.host.split(':')[-1])
+
+                Log(self.host)
+
+                self.GetPrefs()
 
         def GetPrefs(self):
 
                 try:
-                        prefs = XML.ElementFromString(HTTP.Request("http://%s/:/plugins/%s/prefs" % ("127.0.0.1:32400", Plugin.Identifier), headers=Request.Headers, immediate=True).content).xpath('/MediaContainer/Setting')
+                        prefs = XML.ElementFromString(HTTP.Request("http://%s/:/plugins/%s/prefs" % (self.host, Plugin.Identifier), headers=Request.Headers, immediate=True).content).xpath('/MediaContainer/Setting')
                 except Exception as e:
                         Log(str(e))
                         prefs = []
@@ -46,7 +51,7 @@ class DumbPrefs:
 
         def Set(self, key, value):
 
-                HTTP.Request("http://%s/:/plugins/%s/prefs/set?%s=%s" % ("127.0.0.1:32400", Plugin.Identifier, key, value), headers=Request.Headers, immediate=True)
+                HTTP.Request("http://%s/:/plugins/%s/prefs/set?%s=%s" % (self.host, Plugin.Identifier, key, value), headers=Request.Headers, immediate=True)
                 return self.ListPrefs()
 
         def ListPrefs(self):
