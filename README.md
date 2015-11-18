@@ -5,7 +5,7 @@ This serves as a replacement for the InputDirectoryObject in the Plex Plug-in fr
 ![img](http://i.imgur.com/y4smv7P.png)
 ![http://i.imgur.com/Q622vhM.png](http://i.imgur.com/Q622vhM.png)
 
-## Usage:
+### Usage:
 
 add `DumbKeyboard.py` to `Channel.bundle/Contents/Code`.
 
@@ -33,7 +33,7 @@ else:
 def Search(query):
         ...
 ```        
-## Definitions:
+### Definitions:
 
 `DumbKeyboard(prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs)`
 
@@ -51,3 +51,26 @@ Appends a DirectoryObject to `oc` which will provide a series of DirectoryObject
   * Plex for iOS
   * Plex Media Player
   * Plex Web
+
+# DumbPrefs
+
+a replacement for the PrefsObject. This should allow both displaying and changing channel preferences.
+
+It may require the following addition to `Info.plist`:
+```
+    <key>PlexPluginCodePolicy</key>
+    <string>Elevated</string>
+```
+
+### Usage
+
+```
+from DumbPrefs import DumbPrefs
+
+@handler(PREFIX, NAME)
+def MainMenu():
+        oc = ObjectContainer()
+        DumbPrefs(PREFIX, oc,
+                title = L('preferences'),
+                thumb = R(ICONS['preferences']))
+```
