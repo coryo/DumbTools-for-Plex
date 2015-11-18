@@ -7,11 +7,12 @@ class DumbKeyboard:
 
         def __init__(self, prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs):
 
-                Route.Connect(prefix+'/dumbkeyboard',                     self.Keyboard)
-                Route.Connect(prefix+'/dumbkeyboard/submit',              self.Submit)
-                Route.Connect(prefix+'/dumbkeyboard/history',             self.History)
-                Route.Connect(prefix+'/dumbkeyboard/history/clear',       self.ClearHistory)
-                Route.Connect(prefix+'/dumbkeyboard/history/add/{query}', self.AddHistory)
+                cb_hash = hash(str(callback))
+                Route.Connect(prefix+'/dumbkeyboard/%s'                     % cb_hash, self.Keyboard)
+                Route.Connect(prefix+'/dumbkeyboard/%s/submit'              % cb_hash, self.Submit)
+                Route.Connect(prefix+'/dumbkeyboard/%s/history'             % cb_hash, self.History)
+                Route.Connect(prefix+'/dumbkeyboard/%s/history/clear'       % cb_hash, self.ClearHistory)
+                Route.Connect(prefix+'/dumbkeyboard/%s/history/add/{query}' % cb_hash, self.AddHistory)
 
                 oc.add(DirectoryObject(
                         key   = Callback(self.Keyboard),
