@@ -5,7 +5,7 @@ class DumbKeyboard:
         clients = ['Plex for iOS', 'Plex Media Player', 'Plex Web']
         KEYS = list('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+,./<>?')
 
-        def __init__(self, prefix, oc, callback, thumb=None, **kwargs):
+        def __init__(self, prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs):
 
                 Route.Connect(prefix+'/dumbkeyboard',               self.Keyboard)
                 Route.Connect(prefix+'/dumbkeyboard/submit',        self.Submit)
@@ -15,9 +15,9 @@ class DumbKeyboard:
                 do = DirectoryObject()
 
                 do.key   = Callback(self.Keyboard)
-                do.title = u'%s' % L('DumbKeyboard Search')
-                if thumb:
-                        do.thumb = thumb
+                do.title = str(dktitle) if dktitle else u'%s' % L('DumbKeyboard Search')
+                if dkthumb:
+                        do.thumb = dkthumb
                 oc.add(do)
 
                 if not 'DumbKeyboard-History' in Dict:
