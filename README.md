@@ -54,7 +54,7 @@ Appends a DirectoryObject to `oc` which will provide a series of DirectoryObject
 
 # DumbPrefs
 
-a replacement for the PrefsObject. This should allow both displaying and changing channel preferences.
+a replacement for the PrefsObject. This should allow both displaying and changing channel preferences using only DirectoryObjects.
 
 It may require the following addition to `Info.plist`:
 ```
