@@ -2,6 +2,7 @@
 
 This serves as a replacement for the InputDirectoryObject in the Plex Plug-in framework for clients that don't support it. It uses DirectoryObjects to build a query string, then lets you send that to the Search function. Search queries are saved in the channels Dict so they don't need to be re-entered.
 
+![img](http://i.imgur.com/y4smv7P.png)
 ![http://i.imgur.com/Q622vhM.png](http://i.imgur.com/Q622vhM.png)
 
 ## Usage:
