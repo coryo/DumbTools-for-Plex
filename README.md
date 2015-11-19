@@ -35,7 +35,7 @@ def Search(query):
 ```        
 ### Definitions:
 
-`DumbKeyboard(prefix, oc, callback, dktitle=None, dkthumb=None, **kwargs)`
+`DumbKeyboard(prefix, oc, callback, dktitle=None, dkthumb=None, dkplaceholder=None, dksecure=False, **kwargs)`
 
 Appends a DirectoryObject to `oc` which will provide a series of DirectoryObjects to build a string. `callback` is called with the arguments `query` and `**kwargs` when the Submit directory is selected.
 
@@ -44,6 +44,8 @@ Appends a DirectoryObject to `oc` which will provide a series of DirectoryObject
   * *callback*: the Search function. This must have atleast 1 argument 'query'.
   * *dktitle*: (optional) the title to use for the search directoryObject.
   * *dkthumb*: (optional) the thumbnail to use for the search directoryObject.
+  * *dkplaceholder*: (optional) set a default value in the text entry.
+  * *dksecure*: (optional) set the entry to be secure or not (show *'s instead of the characters).
   * ***kwargs*: additional arguments to send to the callback function.
     * if you have search function `Search(query, a=None, b=None)` then you can use `DumbKeyboard(prefix, oc, Search, a='something' b=123)`
  
