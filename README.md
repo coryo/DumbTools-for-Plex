@@ -15,7 +15,7 @@ from DumbTools import DumbKeyboard
 ```
 
 in `__init__.py` where you have an InputDirectoryObject:
-```
+```python
 if Client.Product in DumbKeyboard.clients:
         DumbKeyboard(PREFIX, oc, Search,
                 dktitle = u'%s' L('search'),
@@ -61,14 +61,14 @@ a replacement for the PrefsObject. This should allow both displaying and changin
 ![http://i.imgur.com/fI65O87.png](http://i.imgur.com/fI65O87.png)
 
 It may require the following addition to `Info.plist`:
-```
+```xml
     <key>PlexPluginCodePolicy</key>
     <string>Elevated</string>
 ```
 
 ### Usage:
 
-```
+```python
 from DumbTools import DumbPrefs
 
 @handler(PREFIX, NAME)
