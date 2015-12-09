@@ -100,11 +100,16 @@ class DumbPrefs:
         self.host = 'http://127.0.0.1:32400'
         self.GetPrefs()
 
+    def GetHeaders(self):
+        headers = Request.Headers
+        headers['Connection'] = 'close'
+        return headers        
+
     def GetPrefs(self):
         try:
             data = HTTP.Request("%s/:/plugins/%s/prefs" % (self.host,
                                                            Plugin.Identifier),
-                                headers=Request.Headers,
+                                headers=self.GetHeaders(),
                                 immediate=True,
                                 cacheTime=0).content
         except Exception as e:
@@ -126,7 +131,7 @@ class DumbPrefs:
         HTTP.Request("%s/:/plugins/%s/prefs/set?%s=%s" % (self.host,
                                                           Plugin.Identifier,
                                                           key, value),
-                     headers=Request.Headers,
+                     headers=self.GetHeaders(),
                      immediate=True)
         return ObjectContainer()
 
