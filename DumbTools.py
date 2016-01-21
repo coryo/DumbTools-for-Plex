@@ -94,8 +94,9 @@ class DumbPrefs:
     def __init__(self, prefix, oc, title=None, thumb=None):
         self.host = 'http://127.0.0.1:32400'
         try:
-            self.GetPrefs()
-        except Exception:
+            self.CheckAuth()
+        except Exception as e:
+            Log.Error('DumbPrefs: this user cant access prefs: %s' % str(e))
             return
 
         Route.Connect(prefix+'/dumbprefs/list', self.ListPrefs)
@@ -106,17 +107,22 @@ class DumbPrefs:
                                title=title if title else L('Preferences'),
                                thumb=thumb))
         self.prefix = prefix
+        self.GetPrefs()
 
     def GetHeaders(self):
         headers = Request.Headers
         headers['Connection'] = 'close'
         return headers
 
-    def GetPrefs(self):
+    def CheckAuth(self):
+        """ Only the main users token is accepted at /myplex/account """
         headers = {'X-Plex-Token': Request.Headers.get('X-Plex-Token', '')}
-        req = urllib2.Request("%s/:/plugins/%s/prefs" % (self.host, Plugin.Identifier), headers=headers)
+        req = urllib2.Request("%s/myplex/account" % self.host, headers=headers)
         res = urllib2.urlopen(req)
-        data = res.read()
+
+    def GetPrefs(self):
+        data = HTTP.Request("%s/:/plugins/%s/prefs" % (self.host, Plugin.Identifier),
+                            headers=self.GetHeaders())
         prefs = XML.ElementFromString(data).xpath('/MediaContainer/Setting')
 
         self.prefs = [{'id': pref.xpath("@id")[0],
